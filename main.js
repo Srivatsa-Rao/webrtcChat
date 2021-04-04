@@ -1,5 +1,5 @@
-import firebase from "/node_modules/@firebase/app";
-import "/node_modules/@firebase/firestore";
+import firebase from "firebase/app";
+import "firebase/firestore";
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
