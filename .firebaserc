@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "webrtcchat-6ef76"
+  },
+  "targets": {
+    "webrtcchat-6ef76": {
+      "hosting": {
+        "app": [
+          "wrtc-chat"
+        ]
+      }
+    }
   }
 }
