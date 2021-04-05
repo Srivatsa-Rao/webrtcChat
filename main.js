@@ -1,5 +1,10 @@
-import * as firebase from "firebase/app";
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+import "./style.css";
+
+import firebase from "firebase/app";
+import "firebase/firestore";
+import * as firebaseui from "firebaseui";
+import "firebaseui/dist/firebaseui.css";
+
 const firebaseConfig = {
   apiKey: "AIzaSyABumQe78iRPmjiu3zYjnMZegoK2uVAF7U",
   authDomain: "webrtcchat-6ef76.firebaseapp.com",
@@ -98,6 +103,7 @@ callButton.onclick = async () => {
       const answerDescription = new RTCSessionDescription(data.answer);
       pc.setRemoteDescription(answerDescription);
     }
+    hangupButton.disabled = false;
   });
 
   // When answered, add candidate to peer connection
@@ -110,7 +116,7 @@ callButton.onclick = async () => {
     });
   });
 
-  hangupButton.disabled = false;
+  answerButton.disabled = true;
 };
 
 // 3. Answer the call with the unique ID
@@ -148,4 +154,21 @@ answerButton.onclick = async () => {
       }
     });
   });
+  answerButton.disabled = true;
+  hangupButton.disabled = false;
+};
+
+// hang up call
+
+hangupButton.onclick = async () => {
+  callButton.disabled = true;
+  hangupButton.disabled = true;
+  answerButton.disabled = true;
+  webcamButton.disabled = false;
+  localStream.getTracks().forEach((track) => track.stop());
+  localStream = null;
+  remoteStream.getTracks().forEach((track) => track.stop());
+  remoteStream = null;
+  pc.close();
+  callInput.value = null;
 };
