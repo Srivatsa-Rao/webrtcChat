@@ -5,7 +5,7 @@
         "webrtcchat-6ef76": [
           "webrtcchat-6ef76.web.app"
         ],
-        "webrtcchat": [
+        "wrtc-chat": [
           "wrtc-chat.web.app"
         ]
       }
