@@ -3,10 +3,10 @@
     "webrtcchat-6ef76": {
       "hosting": {
         "webrtcchat-6ef76": [
-          "webrtcchat-6ef76.web.app"
+          "webrtcchat-6ef76"
         ],
         "wrtc-chat": [
-          "wrtc-chat.web.app"
+          "wrtc-chat"
         ]
       }
     }
