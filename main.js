@@ -19,6 +19,82 @@ const firebaseConfig = {
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
+var ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+ui.start("#firebaseui-auth-container", {
+  signInSuccessUrl: "/",
+
+  signInOptions: [
+    // List of OAuth providers supported.
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+  ],
+  signInFlow: "popup",
+  callbacks: {
+    signInSuccess: function (user, credential, redirectUrl) {
+      if (window.opener) {
+        // The widget has been opened in a popup, so close the window
+        // and return false to not redirect the opener.
+        window.close();
+        return false;
+      } else {
+        // The widget has been used in redirect mode, so we redirect to the signInSuccessUrl.
+        return true;
+      }
+    },
+    uiShown: function () {
+      // The widget is rendered.
+      // Hide the loader.
+      document.getElementById("loader").style.display = "none";
+    },
+  },
+  // Other config options...
+});
+
+const initApp = function () {
+  document.getElementById("sign-out").addEventListener("click", function () {
+    firebase.auth().signOut();
+  });
+  firebase.auth().onAuthStateChanged(
+    function (user) {
+      if (user) {
+        // User is signed in.
+        document.getElementById("user-signed-in").style.display = "block";
+        document.getElementById("user-signed-out").style.display = "none";
+        document.getElementById("name").textContent = user.displayName;
+        document.getElementById("email").textContent = user.email;
+        if (user.photoURL) {
+          var photoURL = user.photoURL;
+          // Append size to the photo URL for Google hosted images to avoid requesting
+          // the image with its original resolution (using more bandwidth than needed)
+          // when it is going to be presented in smaller size.
+          if (
+            photoURL.indexOf("googleusercontent.com") != -1 ||
+            photoURL.indexOf("ggpht.com") != -1
+          ) {
+            photoURL =
+              photoURL + "?sz=" + document.getElementById("photo").clientHeight;
+          }
+          document.getElementById("photo").src = photoURL;
+          document.getElementById("photo").style.display = "block";
+        } else {
+          document.getElementById("photo").style.display = "none";
+        }
+      } else {
+        document.getElementById("user-signed-in").style.display = "none";
+        document.getElementById("user-signed-out").style.display = "block";
+        ui.start("#firebaseui-container", getUiConfig());
+      }
+    },
+    function (error) {
+      console.log(error);
+    }
+  );
+};
+
+window.addEventListener("load", function () {
+  initApp();
+});
+
 const firestore = firebase.firestore();
 
 const servers = {
