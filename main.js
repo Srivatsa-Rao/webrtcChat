@@ -19,6 +19,8 @@ const firebaseConfig = {
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
+firebase.analytics();
+
 var ui = new firebaseui.auth.AuthUI(firebase.auth());
 
 ui.start("#firebaseui-auth-container", {
