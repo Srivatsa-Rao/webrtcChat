@@ -1,6 +1,7 @@
 import "./style.css";
 
 import firebase from "firebase/app";
+import "firebase/analytics";
 import "firebase/firestore";
 import * as firebaseui from "firebaseui";
 import "firebaseui/dist/firebaseui.css";
@@ -32,7 +33,7 @@ ui.start("#firebaseui-auth-container", {
   ],
   signInFlow: "popup",
   callbacks: {
-    signInSuccess: function (user, credential, redirectUrl) {
+    signInSuccessWithAuthResult: function (user, credential, redirectUrl) {
       if (window.opener) {
         // The widget has been opened in a popup, so close the window
         // and return false to not redirect the opener.
