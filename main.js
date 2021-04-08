@@ -58,8 +58,8 @@ const initApp = function () {
     function (user) {
       if (user) {
         // User is signed in.
-        document.getElementById("user-signed-in").style.display = "block";
-        document.getElementById("user-signed-out").style.display = "none";
+        document.getElementById("login").style.display = "none";
+        document.getElementById("main").style.display = "block";
         document.getElementById("name").textContent = user.displayName;
         document.getElementById("email").textContent = user.email;
         if (user.photoURL) {
@@ -80,9 +80,8 @@ const initApp = function () {
           document.getElementById("photo").style.display = "none";
         }
       } else {
-        document.getElementById("user-signed-in").style.display = "none";
-        document.getElementById("user-signed-out").style.display = "block";
-        ui.start("#firebaseui-container", getUiConfig());
+        document.getElementById("login").style.display = "block";
+        document.getElementById("main").style.display = "none";
       }
     },
     function (error) {
